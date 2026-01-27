@@ -4,9 +4,19 @@ import {
   imageGenerativeController,
   textMessageController,
 } from "../controllers/messageController.js";
+import connectDB from "../configs/db.js";
 
 const messageRouter = express.Router();
-messageRouter.get("/text", protect, textMessageController);
-messageRouter.get("/image", protect, imageGenerativeController);
+
+// Wrap each route to connect DB first
+messageRouter.get("/text", protect, async (req, res) => {
+  await connectDB();
+  return textMessageController(req, res);
+});
+
+messageRouter.get("/image", protect, async (req, res) => {
+  await connectDB();
+  return imageGenerativeController(req, res);
+});
 
 export default messageRouter;
