@@ -12,7 +12,7 @@ const userRouter = express.Router();
 
 // Wrap each route to connect DB first
 userRouter.post("/register", async (req, res) => {
-  await connectDB();
+  await connectDB(); // ensure MongoDB is connected
   return registerUser(req, res);
 });
 
@@ -21,7 +21,10 @@ userRouter.post("/login", async (req, res) => {
   return loginUSer(req, res);
 });
 
-userRouter.get("/data", protect, getUser); // perfect
+userRouter.get("/data", protect, async (req, res) => {
+  await connectDB();
+  return getUser(req, res);
+});
 
 userRouter.get("/published-images", async (req, res) => {
   await connectDB();
