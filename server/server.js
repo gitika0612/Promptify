@@ -10,7 +10,9 @@ import { stripeWebhooks } from "./controllers/webHooks.js";
 
 const app = express();
 
-connectDB();
+connectDB().catch((err) => {
+  console.error("DB Error:", err);
+});
 
 app.post(
   "/api/stripe",
@@ -35,5 +37,14 @@ const PORT = process.env.PORT || 3000;
 // app.listen(PORT, () => {
 //   console.log(`Server is running at port ${PORT}`);
 // });
+
+app.use((err, req, res, next) => {
+  console.error("SERVER ERROR:", err);
+
+  res.status(500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
+});
 
 export default app;
