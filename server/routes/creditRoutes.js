@@ -10,9 +10,11 @@ creditRouter.get("/plan", async (req, res) => {
   return getPlans(req, res);
 });
 
-creditRouter.post("/purchase", protect, async (req, res) => {
-  await connectDB();
-  return purchasePlan(req, res);
-});
+// creditRouter.post("/purchase", protect, async (req, res) => {
+//   await connectDB();
+//   return purchasePlan(req, res);
+// });
+
+creditRouter.post("/purchase", protect, purchasePlan);
 
 export default creditRouter;

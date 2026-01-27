@@ -21,10 +21,7 @@ userRouter.post("/login", async (req, res) => {
   return loginUSer(req, res);
 });
 
-userRouter.get("/data", protect, async (req, res) => {
-  await connectDB();
-  return getUser(req, res);
-});
+userRouter.get("/data", protect, getUser); // perfect
 
 userRouter.get("/published-images", async (req, res) => {
   await connectDB();
