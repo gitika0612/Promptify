@@ -5,14 +5,8 @@ import connectDB from "../configs/db.js";
 
 const creditRouter = express.Router();
 
-creditRouter.get("/plan", async (req, res) => {
-  await connectDB();
-  return getPlans(req, res);
-});
+creditRouter.get("/plan", getPlans);
 
-creditRouter.post("/purchase", protect, async (req, res) => {
-  await connectDB();
-  return purchasePlan(req, res);
-});
+creditRouter.post("/purchase", protect, purchasePlan);
 
 export default creditRouter;

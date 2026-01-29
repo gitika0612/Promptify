@@ -19,7 +19,7 @@ export const textMessageController = async (req, res) => {
     const { chatId, prompt } = req.body;
 
     const chat = await Chat.findOne({ userId, _id: chatId });
-    chat.message.push({
+    chat.messages.push({
       role: "user",
       content: prompt,
       timestamp: Date.now(),
@@ -27,7 +27,7 @@ export const textMessageController = async (req, res) => {
     });
 
     const { choices } = await openai.chat.completions.create({
-      model: "gemini-2.0-flash",
+      model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
     });
 
@@ -88,7 +88,7 @@ export const imageGenerativeController = async (req, res) => {
     // upload to imagekit media library
     const uploadResponse = await imagekit.upload({
       file: base64Image,
-      fileName: `${Date.now().png}`,
+      fileName: `${Date.now()}.png`,
       folder: "promptify",
     });
 
