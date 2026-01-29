@@ -9,6 +9,7 @@ const Messages = ({ message }) => {
     Prism.highlightAll;
   }, [message.content]);
 
+  console.log(message, "message");
   return (
     <div>
       {message.role === "user" ? (
@@ -23,7 +24,7 @@ const Messages = ({ message }) => {
         </div>
       ) : (
         <div className="inline-flex flex-col gap-2 p-2 px-4 max-w-2xl bg-[#e6ccff]/20 dark:bg-[#57317C]/30 border border-[#80609F]/30 rounded-md my-4  ">
-          {message?.image ? (
+          {message?.isImage ? (
             <img
               src={message?.content}
               alt=""
